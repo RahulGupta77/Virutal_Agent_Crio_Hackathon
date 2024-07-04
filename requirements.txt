@@ -1,0 +1,9 @@
+langchain_core
+python-dotenv
+sentence_transformers
+langchain==0.0.316
+sentence-transformers==2.2.2
+faiss-cpu
+google-generativeai
+InstructorEmbedding
+flask
