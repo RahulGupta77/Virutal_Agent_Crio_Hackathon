@@ -1,5 +1,5 @@
 qkart_faqs/
-render/
+aws-deployment/
 __pycache__/
 *.pyc
 .env

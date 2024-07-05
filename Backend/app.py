@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from langchain.llms import GooglePalm
 from langchain.chains import ConversationalRetrievalChain
 from langchain.prompts import PromptTemplate
@@ -8,6 +9,7 @@ from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
+CORS(app) 
 
 def load_environment_variables():
     load_dotenv()
@@ -53,6 +55,9 @@ chat_history = []
 
 @app.route('/query', methods=['POST'])
 def query():
+    if request.content_type != 'application/json':
+        return jsonify({'error': 'Content-Type must be application/json'}), 415
+
     data = request.get_json()
     question = data.get('question')
     if not question:
