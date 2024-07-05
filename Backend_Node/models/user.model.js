@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { conversation } = require("./conversation.model");
 
 const User = mongoose.Schema({
   username: {
@@ -17,4 +18,4 @@ const User = mongoose.Schema({
 });
 
 const userModel = mongoose.model("User", User);
-module.exports = userModel;
+module.exports = { userModel };
