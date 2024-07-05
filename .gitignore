@@ -1,4 +1,5 @@
 qkart_faqs/
+render/
 __pycache__/
 *.pyc
 .env
@@ -6,3 +7,4 @@ __pycache__/
 .ipynb_checkpoints/
 .DS_Store
 Thumbs.db
+.gitignore
