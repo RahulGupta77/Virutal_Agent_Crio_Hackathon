@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Context from "./Context";
 import { conversation } from "../assets/data";
 import AddConversation from "./AddConversation";
@@ -11,7 +11,7 @@ function AllConversation({ currentConversationHandler }: Props) {
   let [newConversation, setNewConversation] = useState(false);
 
   function handlerConversation(show:boolean){
-       setNewConversation(prev=>show)
+       setNewConversation(show)
   }
 
 
