@@ -46,7 +46,7 @@ def initialize_conversational_chain(llm, docsearch):
 
 # Initialize everything once at the start
 load_environment_variables()
-DB_FAISS_PATH = "vectorDatabase/db_faiss"
+DB_FAISS_PATH = "vectorDatabase/db_faiss_technical"
 embeddings = initialize_embeddings()
 docsearch = load_faiss_index(DB_FAISS_PATH, embeddings)
 llm = initialize_llm(os.environ['GOOGLE_API_KEY'])
