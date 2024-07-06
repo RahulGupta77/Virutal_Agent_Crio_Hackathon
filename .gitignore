@@ -7,5 +7,8 @@ __pycache__/
 .ipynb_checkpoints/
 .DS_Store
 Thumbs.db
-.gitignore
-.vscode
+*.gitignore
+*.vscode
+*csv_files/
+
+
