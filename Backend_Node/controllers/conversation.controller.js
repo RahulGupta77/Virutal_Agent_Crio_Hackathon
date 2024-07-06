@@ -9,9 +9,20 @@ const newConversation = async (req, res) => {
     question: req.body.question,
     response: req.body.response,
   });
-  const updatedUser = await userModel.findOne({ username: req.body.username });
-  updatedUser.conversations.push(converse);
-  res.status(201).send(converse);
+  //   const updatedUser = await userModel.findOne({ username: req.body.username });
+  //   updatedUser.conversations.push(converse._id);
+  const updatedUser = await userModel.findOneAndUpdate(
+    { username: req.body.username },
+    { $push: { conversations: converse._id } },
+    { new: true }
+  );
+
+  if (!updatedUser) {
+    console.log("No user found with username:");
+  } else {
+    console.log("Updated user:", updatedUser);
+  }
+  res.status(201).send({ userModel: updatedUser });
 };
 
 module.exports = { newConversation };
