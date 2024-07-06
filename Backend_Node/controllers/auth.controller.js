@@ -9,4 +9,12 @@ const registerController = async (req, res) => {
   }
 };
 
-module.exports = { registerController };
+const loginController = async (req, res) => {
+  const user = await userModel.findOne({ username: req.body.username });
+  if (user.password === req.body.password) {
+    return res.status(200).send({ verified: true });
+  }
+  res.status(404).send({ verified: false });
+};
+
+module.exports = { registerController, loginController };

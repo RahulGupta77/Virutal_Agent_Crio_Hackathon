@@ -32,7 +32,7 @@ const newConversation = async (req, res) => {
   );
 
   if (!updatedUser) {
-    console.log("No user found with username:");
+    await conversationModel.findByIdAndDelete(converse._id);
   } else {
     console.log("Updated user:", updatedUser);
   }
