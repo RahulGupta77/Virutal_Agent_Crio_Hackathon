@@ -1,36 +1,20 @@
+const mongoose = require("mongoose");
 const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("./config/db");
-const cors = require("cors");
-const routes = require("./routes");
 const app = express();
+const authRouter = require("./routes/auth.route");
+const conversationRouter = require("./routes/conversation.route");
+require("dotenv").config();
 
-// * Database connection
-var db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function () {
-  console.log("db connected!");
+app.use(express.json());
+
+app.get("/", (req, res) =>
+  res.status(200).send("Routes are working properly!")
+);
+
+app.use("/auth", authRouter);
+app.use("/conversation", conversationRouter);
+
+mongoose.connect(process.env.MONGODB_URI).then(() => {
+  console.log("Connected to Local DB");
+  app.listen(process.env.PORT);
 });
-
-// * Cors
-app.use(cors());
-
-// * Body Parser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// * Api routes
-app.use("/api", routes);
-
-app.get("/", (req, res) => {
-  console.log("hello");
-  res.send("hello");
-});
-
-app.use("*", (req, res) => {
-  res.send("Route not found");
-});
-
-let PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
