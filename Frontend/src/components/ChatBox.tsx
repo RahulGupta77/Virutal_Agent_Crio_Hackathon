@@ -1,91 +1,79 @@
-"use client"
-import React, { useEffect, useRef, useState } from 'react'
-import useFetch from '../hooks/useFetch'
-import Chat from './Chat'
+"use client";
+import { useState } from "react";
+import { IoArrowBack } from "react-icons/io5";
+import Conversation from "./Conversation";
+import AllConversation from "./AllConversation";
+import { conversation, message } from "../assets/data";
+import { Message } from "../interface/Types";
 
-interface Message {
-    id: number,
-    message: string,
-    senderId: string,
-}
+type ConversationType = {
+  id: string | null;
+  title: string;
+  messages: Message[];
+};
 
-let obj: Message[] = [
-    {id: 1, message: "omkar", senderId: "bot"},
-    {id: 2, message: "there is something", senderId: "omkar"},
-    {id: 3, message: "there nothing", senderId: "bot"},
-    {id: 4, message: "no one is there", senderId: "bot"},
-]
-
-type Props = {}
+type Props = {};
 
 function ChatBox({}: Props) {
-    let [messages, setMessages] = useState(obj)
-    let inputRef = useRef<HTMLInputElement>(null)
-    let {getResponse,loading} = useFetch()
-    let chatContainerRef = useRef<HTMLDivElement | null>(null)
+  const [currentConversation, setCurrentConversation] =
+    useState<ConversationType>({
+      id: null,
+      title: "",
+      messages: [],
+    });
 
-   async function sendMessageHandler() {
-        if (inputRef.current?.value != undefined && inputRef.current?.value.trim().length) {
-            let message: Message = {
-                id: Math.random() * 1000,
-                message: inputRef.current?.value,
-                senderId: "me"
+  function currentConversationHandler(id: string) {
+    const cons = conversation.find((ele) => ele.id === id);
+
+    const msgs: Message[] = [];
+    if (cons?.messagesId) {
+      for (const messageId of cons.messagesId) {
+        const foundMessage: Message | undefined = message.find(
+          (ele) => ele.id === messageId
+        );
+        if (foundMessage) {
+          msgs.push(foundMessage);
+        }
+      }
+    }
+    setCurrentConversation({
+      id: cons?.id || null,
+      title: cons?.title || "",
+      messages: msgs,
+    });
+  }
+  console.log(currentConversation);
+  return (
+    <div className="w-full h-full bg-stone-100 rounded-md flex flex-col justify-between max-w-[40rem]">
+      <div className="bg-green-400 h-[5%] rounded-t-md text-center font-bold text-2xl py-4 px-6 flex justify-between items-center">
+        {!currentConversation.id ? (
+          <div></div>
+        ) : (
+          <div
+            className="hover:cursor-pointer"
+            onClick={() =>
+              setCurrentConversation({
+                id: null,
+                title: "",
+                messages: [],
+              })
             }
-            let query = inputRef.current?.value.trim()
-            inputRef.current.value = ''; // Clear the input after sending the message
-            setMessages(prev => [...prev, message])
-            let res = await getResponse(query)
-            let response:Message = {
-              id : Math.random() *1000,
-              message:res,
-              senderId:"bot",
-             }
-            setMessages(prev => [...prev, response])
-            
-
-
-        } else {
-            console.log("Enter your Question")
-        }
-
-    }
-
-    function sendMessage(e: React.KeyboardEvent<HTMLInputElement>) {
-        if (e.key === 'Enter') {
-            sendMessageHandler();
-        }
-    }
-
-    useEffect(()=>{
-       if(chatContainerRef.current){
-        chatContainerRef.current.scrollTop =chatContainerRef.current.scrollHeight;
-       }
-    },[messages])
-
-    return (
-        <div className='w-full h-full bg-stone-100 rounded-md flex flex-col justify-between max-w-[40rem]'>
-            <header className='bg-green-400 h-[5%] rounded-t-md text-center font-bold text-2xl p-1 py-4'>
-                <h1>8282 Agent</h1>
-            </header>
-            <div className='h-[35rem] overflow-y-scroll flex flex-col items-baseline' ref={chatContainerRef}>
-                {messages.map(ele =>
-                    <Chat key={ele.id} position={ele.senderId === 'bot' ? 'left' : "right"} text={ele.message}/>
-                )}
-            </div>
-            <div className='p-4'>
-
-                <input
-                    ref={inputRef}
-                    placeholder='Enter your query'
-                    type='text'
-                    disabled={loading}
-                    className='py-1 px-2 w-10/12 mx-2 outline-none'
-                    onKeyDown={sendMessage}
-                />
-                <button onClick={sendMessageHandler} disabled={loading}  className='bg-stone-300 px-3 py-2 rounded-lg'>Send</button>
-            </div>
-        </div>
-    )
+          >
+            <IoArrowBack />
+          </div>
+        )}
+        <h1>8282 Agent</h1>
+        <div></div>
+      </div>
+      {!currentConversation.id ? (
+        <AllConversation
+          currentConversationHandler={currentConversationHandler}
+        />
+      ) : (
+        <Conversation allMessages={currentConversation.messages} />
+      )}
+    </div>
+  );
 }
 
-export default ChatBox
+export default ChatBox;

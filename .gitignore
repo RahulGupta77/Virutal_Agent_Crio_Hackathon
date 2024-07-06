@@ -2,6 +2,7 @@ qkart_faqs/
 aws-deployment/
 __pycache__/
 *.pyc
+*node_modules
 .env
 *.csv
 .ipynb_checkpoints/
