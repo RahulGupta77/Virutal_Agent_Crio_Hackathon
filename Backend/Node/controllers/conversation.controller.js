@@ -73,29 +73,40 @@ const newConversation = async (req, res) => {
 };
 
 const updateConversation = async (req, res) => {
-  const id = req.params.id;
-  console.log("params", id);
-  const converse = await conversationModel.findOne({ _id: id });
-  console.log(converse);
+  try {
+    const id = req.params.id;
+    const message = await messageModel.create({
+      question: req.body.question,
+      response: req.body.response,
+    });
+    const converse = await conversationModel.findOne({ _id: id });
+    converse.message.push(message._id);
+    await converse.save();
+
+    res.status(200).send(converse);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+
   //   await converse.message.push({
   //     question: req.body.question,
   //     response: req.body.response,
   //   });
-  const newConverse = await conversationModel.findOneAndUpdate(
-    { _id: converse._id },
-    {
-      $push: {
-        message: {
-          question: req.body.question,
-          response: req.body.response,
-        },
-      },
-    },
-    { new: true }
-  );
-  console.log(newConverse);
+  // const newConverse = await conversationModel.findOneAndUpdate(
+  //   { _id: converse._id },
+  //   {
+  //     $push: {
+  //       message: {
+  //         question: req.body.question,
+  //         response: req.body.response,
+  //       },
+  //     },
+  //   },
+  //   { new: true }
+  // );
+  // console.log(newConverse);
 
-  res.status(200).send(newConverse);
+  //res.status(200).send(newConverse);
 };
 
 module.exports = {

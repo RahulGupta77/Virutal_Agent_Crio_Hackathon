@@ -10,6 +10,7 @@ const {
 router.get("/all", getConversation);
 router.get("/post/:id", getMessage);
 router.post("/new", newConversation);
+// To work!
 router.patch("/update/:id", updateConversation);
 
 module.exports = router;
