@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const BASE_URL = "http://172.20.50.86:5000/query";
 
