@@ -11,8 +11,10 @@ const registerController = async (req, res) => {
 
 const loginController = async (req, res) => {
   const user = await userModel.findOne({ username: req.body.username });
-  if (user.password === req.body.password) {
-    return res.status(200).send({ verified: true });
+  if (user && user.password === req.body.password) {
+    return res
+      .status(200)
+      .send({ verified: true, username: req.body.username });
   }
   res.status(404).send({ verified: false });
 };
