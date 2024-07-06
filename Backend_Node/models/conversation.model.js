@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { message } = require("./user.model");
+const { message } = require("./message.model");
 
 const conversation = mongoose.Schema({
   title: {
@@ -7,7 +7,6 @@ const conversation = mongoose.Schema({
   },
   message: {
     type: [message],
-    default: [],
   },
 });
 
