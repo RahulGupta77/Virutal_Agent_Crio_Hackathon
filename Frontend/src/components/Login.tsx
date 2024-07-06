@@ -1,7 +1,6 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { User } from "../interface/Types";
 import useUserAuth from "../hooks/userAuth";
-import { MyContext } from "./ContextProvider";
 
 interface Props {
   setView: (view: boolean) => void;
@@ -10,8 +9,7 @@ interface Props {
 export default function Login({ setView }: Props) {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const { data, error, loading, login } = useUserAuth();
-  const { setAuth } = useContext(MyContext);
+  const {  error, loading, login } = useUserAuth();
   const [loginError, setLoginError] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -57,7 +55,7 @@ export default function Login({ setView }: Props) {
             placeholder="Enter your password"
           />
         </div>
-        <button type="submit" className="bg-green-400 p-2 rounded-md cursor-pointer">
+        <button type="submit" className="bg-green-400 p-2 rounded-md cursor-pointer" onClick={()=>setView(false)}>
           {loading ? 'Loading...' : 'Login'}
         </button>
         {loginError && <div className="text-red-500">{loginError}</div>}
