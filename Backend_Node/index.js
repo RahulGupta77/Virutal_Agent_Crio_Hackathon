@@ -13,7 +13,8 @@ app.get("/", (req, res) =>
 
 app.use("/auth", authRouter);
 app.use("/conversation", conversationRouter);
-mongoose.connect("mongodb://127.0.0.1:27017").then(() => {
+
+mongoose.connect(process.env.MONGODB_URI).then(() => {
   console.log("Connected to Local DB");
   app.listen(process.env.PORT);
 });
