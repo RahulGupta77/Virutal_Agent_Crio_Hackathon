@@ -4,10 +4,10 @@ const { message } = require("./user.model");
 const conversation = mongoose.Schema({
   title: {
     type: String,
-    required: true,
   },
   message: {
     type: [message],
+    default: [],
   },
 });
 
