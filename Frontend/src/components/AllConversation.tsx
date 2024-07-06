@@ -16,7 +16,7 @@ function AllConversation({ currentConversationHandler }: Props) {
 
 
   return (
-    <div className="h-[35rem] bg-white flex flex-col justify-between ">
+    <div className="h-[35rem] bg-bgPrimary flex flex-col justify-between ">
       {!newConversation ? (
         <>
           <div className="overflow-y-scroll">
