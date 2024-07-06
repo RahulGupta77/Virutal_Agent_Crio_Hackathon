@@ -1,4 +1,3 @@
-import { SignIn } from "@clerk/clerk-react";
 import "./App.css";
 import ChatBox from "./components/ChatBox";
 import ContextProvider, { MyContext } from "./components/ContextProvider";
