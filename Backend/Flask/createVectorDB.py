@@ -35,17 +35,17 @@ def process_csv_to_vector_db(file_path, columns, model_name, db_path, chunk_size
     text_chunks = split_text_into_chunks(data, chunk_size, chunk_overlap)
     generate_embeddings_and_create_db(text_chunks, model_name, db_path)
 
-# Example usage:
+
 columns_faq = ["Question", "Sprint", "Micro Experience", "Module", "Milestone"]
-file_path_faq = 'csv_files/Qkart_FAQs.csv'
-db_path_faq = "vectorDatabase/db_faiss_faq"
+file_path_faq = '../csv_files/Qkart_FAQs.csv'
+db_path_faq = "./vectorDatabase/db_faiss_Qkart"
 
 columns_delivery = ["Question", "Response"]
-file_path_delivery = 'csv_files/delivery_faqs.csv'
-db_path_delivery = "vectorDatabase/db_faiss_delivery"
+file_path_delivery = '../csv_files/Sales_FAQs.csv'
+db_path_delivery = "./vectorDatabase/db_faiss_Sales"
 
-# Process Qkart FAQs CSV
+# Processing Qkart FAQs CSV
 process_csv_to_vector_db(file_path_faq, columns_faq, "hkunlp/instructor-large", db_path_faq)
 
-# Process Delivery FAQs CSV
+# Processing Delivery FAQs CSV
 process_csv_to_vector_db(file_path_delivery, columns_delivery, "hkunlp/instructor-large", db_path_delivery)
