@@ -1,17 +1,17 @@
-import React, { createContext, ReactElement, useState } from 'react';
+import React, { createContext, ReactElement, useState } from "react";
 
 // Define the context value type
 type AuthContextType = {
   auth: {
-    id: string;
     auth: boolean;
     username: string;
   };
-  setAuth: React.Dispatch<React.SetStateAction<{
-    id: string;
-    auth: boolean;
-    username: string;
-  }>>;
+  setAuth: React.Dispatch<
+    React.SetStateAction<{
+      auth: boolean;
+      username: string;
+    }>
+  >;
 };
 
 type Props = {
@@ -21,20 +21,18 @@ type Props = {
 // Initial context value
 const initialContextValue: AuthContextType = {
   auth: {
-    id: '',
     auth: false,
-    username: ''
+    username: "",
   },
-  setAuth: () => {}
+  setAuth: () => {},
 };
 
 const MyContext = createContext<AuthContextType>(initialContextValue);
 
 function ContextProvider({ children }: Props) {
   const [auth, setAuth] = useState({
-    id: '',
     auth: false,
-    username: ''
+    username: "",
   });
 
   return (

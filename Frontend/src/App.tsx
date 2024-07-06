@@ -12,7 +12,7 @@ function App() {
     <ContextProvider>
       <main className={`flex h-5/6 flex-col items-center m-8 `}>
         <h1>Chat bot</h1>
-        {auth.auth ? <ChatBox /> : <Auth />}
+        {!auth.auth ? <ChatBox /> : <Auth />}
       </main>
     </ContextProvider>
   );

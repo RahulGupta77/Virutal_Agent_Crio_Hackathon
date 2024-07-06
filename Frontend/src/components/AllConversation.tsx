@@ -21,7 +21,7 @@ function AllConversation({ currentConversationHandler }: Props) {
         <>
           <div className="overflow-y-scroll">
             {conversation.map((ele) => (
-              <div onClick={() => currentConversationHandler(ele.id)}>
+              <div onClick={() => currentConversationHandler(ele.id)} key={ele.id}>
                 <Context title={ele.title} messageId={ele.id} />
               </div>
             ))}
