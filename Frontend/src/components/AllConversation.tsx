@@ -20,13 +20,14 @@ function AllConversation({ currentConversationHandler }: Props) {
       {!newConversation ? (
         <>
           <div className="overflow-y-scroll">
+            <h1 className="py-2 font-medium text-xl">Previous Conversations</h1>
             {conversation.map((ele) => (
               <div onClick={() => currentConversationHandler(ele.id)} key={ele.id}>
                 <Context title={ele.title} messageId={ele.id} />
               </div>
             ))}
           </div>
-          <div className="p-4 bg-green-300 hover:cursor-pointer">
+          <div className="p-4 bg-primary text-bgPrimary hover:cursor-pointer ">
             <button onClick={()=>handlerConversation(true)}>Add new Conversation</button>
           </div>
         </>

@@ -46,7 +46,7 @@ function ChatBox({}: Props) {
   return (
     <div className="w-full h-full bg-stone-100 rounded-xl flex flex-col justify-between max-w-[30rem]">
       <div className="bg-bgPrimary h-[5%] rounded-t-xl text-center font-bold text-2xl py-4 px-6 flex justify-between items-center border-b-primary">
-        {currentConversation.id ? (
+        {!currentConversation.id ? (
           <div></div>
         ) : (
           <div
@@ -65,7 +65,7 @@ function ChatBox({}: Props) {
         <h1 className="text-primary">8282 Chatbot</h1>
         <div></div>
       </div>
-      {currentConversation.id ? (
+      {!currentConversation.id ? (
         <AllConversation
           currentConversationHandler={currentConversationHandler}
         />
