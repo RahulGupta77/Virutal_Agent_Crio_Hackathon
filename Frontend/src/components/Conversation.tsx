@@ -21,7 +21,7 @@ export default function Conversation({ allMessages, conversationId }: Props) {
 
   const sendMessageHandler = useCallback(async () => {
     const query = inputRef.current?.value.trim();
-
+    
     if (query) {
       const message: Message = {
         id: String(Math.random() * 1000),
@@ -45,8 +45,6 @@ export default function Conversation({ allMessages, conversationId }: Props) {
         msgs.push(response);
         return msgs;
       });
-    } else {
-      console.log("Enter your Question");
     }
   }, [getResponse]);
 

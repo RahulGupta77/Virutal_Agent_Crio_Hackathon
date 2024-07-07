@@ -12,6 +12,7 @@ export default function useFetch() {
   async function getResponse(query: string) {
     setLoading(true);
     try {
+      debugger;
       let data = await fetch(BASE_URL, {
         headers: {
           "Content-Type": "application/json",
@@ -20,9 +21,6 @@ export default function useFetch() {
         body: JSON.stringify({ question: query }),
       });
       let res: Response = await data.json();
-      if(res.answer.toLocaleLowerCase().includes('response')){
-        res.answer = res.answer.split('response')[1]
-      }
       return res.answer;
     } catch (err) {
       console.log("not getting response from llm");

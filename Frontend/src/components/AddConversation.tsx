@@ -75,15 +75,15 @@ const AddConversation: React.FC<Props> = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (queryRef.current?.value) {
-      let newConversation: NewConversation = {
-        microExperience: selectedMicroExperience,
+        let newConversation: NewConversation = {
+          microExperience: selectedMicroExperience,
         milestone:selectedMilestone,
-        module: selectedModule,
-        query: queryRef.current.value,
+          module: selectedModule,
+          query: queryRef.current.value,
         response: "I got you",
-        sprint: selectedSprint,
-        username: auth.username,
-      };
+          sprint: selectedSprint,
+          username: auth.username,
+        };
 
       addNewConversation(newConversation);
     }
@@ -189,9 +189,9 @@ const AddConversation: React.FC<Props> = ({
           >
             Back
           </div>
-          <div className="hover:cursor-pointer bg-green-300 text-white w-full py-4 text-bgPrimary text-center bg-primary">
-            <button className="w-full">{!loading?"Create":"Creating..."}</button>
-          </div>
+          <button className="hover:cursor-pointer bg-green-300 text-white w-full py-4 text-bgPrimary text-center bg-primary">
+            {!loading ? "Create" : "Creating..."}
+          </button>
         </div>
       </form>
     </div>
