@@ -2,8 +2,9 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { LoginRes, User } from "../interface/Types";
 import { MyContext } from "../components/ContextProvider";
+import { BASE_URL } from "../constants/constatns";
 
-const baseurl = import.meta.env.VITE_BASE_URL;
+const baseurl = BASE_URL;
 
 type UseUserAuthResult = {
   loading: boolean;
