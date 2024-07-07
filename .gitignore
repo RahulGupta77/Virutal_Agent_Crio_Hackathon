@@ -8,4 +8,8 @@ __pycache__/
 .ipynb_checkpoints/
 .DS_Store
 Thumbs.db
-.gitignore
+*.gitignore
+*.vscode
+*csv_files/
+
+

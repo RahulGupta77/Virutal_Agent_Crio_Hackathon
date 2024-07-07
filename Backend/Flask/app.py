@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
-CORS(app) 
+CORS(app)
 
 def load_environment_variables():
     load_dotenv()
@@ -34,27 +34,40 @@ def create_prompt_template():
     
     return PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 
-def initialize_conversational_chain(llm, docsearch):
-    prompt = create_prompt_template()
-    chain_type_kwargs = {"prompt": prompt}
+def initialize_conversational_chain(llm, docsearch, prompt_template):
+
+    chain_type_kwargs = {"prompt": prompt_template}
+
     return ConversationalRetrievalChain.from_llm(
-        llm,
+       llm,
         chain_type="stuff",
         retriever=docsearch.as_retriever(),
         combine_docs_chain_kwargs=chain_type_kwargs
     )
 
-# Initialize everything once at the start
+# Loading the environment variables 
 load_environment_variables()
-DB_FAISS_PATH = "vectorDatabase/db_faiss"
-embeddings = initialize_embeddings()
-docsearch = load_faiss_index(DB_FAISS_PATH, embeddings)
-llm = initialize_llm(os.environ['GOOGLE_API_KEY'])
-qa = initialize_conversational_chain(llm, docsearch)
-chat_history = []
 
-@app.route('/query', methods=['POST'])
-def query():
+# For QKart FAQs
+DB_FAISS_PATH_QKART = "./vectorDatabase/db_faiss_Qkart" 
+embeddings_qkart = initialize_embeddings()
+docsearch_qkart = load_faiss_index(DB_FAISS_PATH_QKART, embeddings_qkart)
+llm_qkart = initialize_llm(os.environ['GOOGLE_API_KEY'])
+prompt_template_qkart = create_prompt_template()
+qa_qkart = initialize_conversational_chain(llm_qkart, docsearch_qkart, prompt_template_qkart)
+chat_history_qkart = []
+
+# For Sales FAQs
+DB_FAISS_PATH_SALES = "./vectorDatabase/db_faiss_Sales"  
+embeddings_sales = initialize_embeddings()
+docsearch_sales = load_faiss_index(DB_FAISS_PATH_SALES, embeddings_sales)
+llm_sales = initialize_llm(os.environ['GOOGLE_API_KEY'])
+prompt_template_sales = create_prompt_template()
+qa_sales = initialize_conversational_chain(llm_sales, docsearch_sales, prompt_template_sales)
+chat_history_sales = []
+
+@app.route('/qkart-faqs', methods=['POST'])
+def qkart_faqs():
     if request.content_type != 'application/json':
         return jsonify({'error': 'Content-Type must be application/json'}), 415
 
@@ -63,11 +76,29 @@ def query():
     if not question:
         return jsonify({'error': 'No question provided'}), 400
 
-    result = qa({"question": question, "chat_history": chat_history})
+    result = qa_qkart({"question": question, "chat_history": chat_history_qkart})
     answer = result['answer']
     
-    # Update chat history
-    chat_history.append((question, answer))
+    # Updating qkart-faqs chat history
+    chat_history_qkart.append((question, answer))
+    
+    return jsonify({'answer': answer})
+
+@app.route('/sales-faqs', methods=['POST'])
+def sales_faqs():
+    if request.content_type != 'application/json':
+        return jsonify({'error': 'Content-Type must be application/json'}), 415
+
+    data = request.get_json()
+    question = data.get('question')
+    if not question:
+        return jsonify({'error': 'No question provided'}), 400
+
+    result = qa_sales({"question": question, "chat_history": chat_history_sales})
+    answer = result['answer']
+    
+    # Updating sales chat history
+    chat_history_sales.append((question, answer))
     
     return jsonify({'answer': answer})
 
