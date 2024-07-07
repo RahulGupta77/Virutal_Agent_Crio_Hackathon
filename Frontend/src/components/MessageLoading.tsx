@@ -5,7 +5,7 @@ interface Props {
   delay?: number; // Optional delay before typing starts
 }
 
-const MessageLoading: React.FC<Props> = ({ delay = 500 }) => {
+const MessageLoading: React.FC<Props> = () => {
   const [dots, setDots] = useState("");
 
   useEffect(() => {

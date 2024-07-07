@@ -20,7 +20,6 @@ export default function useFetch() {
         body: JSON.stringify({ question: query }),
       });
       let res: Response = await data.json();
-      console.log(res);
       return res.answer;
     } catch (err) {
       console.log("not getting response from llm");
