@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const BASE_URL = "http://172.20.50.86:5000/query";
+const BASE_URL = "http://192.168.0.59:5000/qkart-faqs";
 
 interface Response {
   answer: string;

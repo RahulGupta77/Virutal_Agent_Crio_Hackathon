@@ -26,7 +26,7 @@ export default function useUserAuth(): UseUserAuthResult {
     setLoading(true);
     setError(null);
     try {
-      const response: LoginRes = (await axios.post(`${baseurl}/login`, user))
+      const response: LoginRes = (await axios.post(`${baseurl}/auth/login`, user))
         .data;
       if (response.verified) {
         setAuth({ auth: true, username: response.username });
@@ -43,7 +43,7 @@ export default function useUserAuth(): UseUserAuthResult {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post(`${baseurl}/signup`, user);
+      const response = await axios.post(`${baseurl}/auth/register`, user);
       setData(response.data);
     } catch (err: any) {
       setError(err.message || "An error occurred");
