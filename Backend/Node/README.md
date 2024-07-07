@@ -41,7 +41,7 @@ Registers a new user in the database.
 - **Status**: `201 Created`
 - **Body**:
   \`\`\`json
-{
+  {
   "_id": {
     "$oid": "String"
   },
@@ -53,7 +53,7 @@ Registers a new user in the database.
     }
   ],
   "__v": Number
-}
+  }
   \`\`\`
 
 ### `POST /login`
