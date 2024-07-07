@@ -82,7 +82,7 @@ Authenticates a user and returns a token.
   }
   \`\`\`
 
-### `POST /conversations`
+### `POST /conversations/new`
 
 Creates a new conversation for a user.
 
@@ -91,12 +91,11 @@ Creates a new conversation for a user.
 - **Method**: `POST`
 - **Headers**: 
   - `Content-Type: application/json`
-  - `Authorization: Bearer <token>`
 - **Body**:
   \`\`\`json
   {
     "username": "string",
-    question": "string",
+    "question": "string",
     "response": "string"
   }
   \`\`\`
@@ -111,3 +110,70 @@ Creates a new conversation for a user.
   }
   \`\`\`
 
+### `GET /conversations/all`
+
+Gets all conversation for a user.
+
+#### Request
+- **URL**: `/conversations/all`
+- **Method**: `GET`
+- **Headers**: 
+  - `Content-Type: application/json`
+- **Params**:
+  \`\`\`json
+  {
+    "username": "string",
+  }
+  \`\`\`
+
+#### Response
+- **Status**: `200 OK`
+- **Body**:
+  \`\`\`json
+{
+  "_id": {
+    "$oid": "String"
+  },
+  "username": "String",
+  "password": "String",
+  "conversations": [
+    {
+      "$oid": "String"
+    }
+  ],
+  "__v": Number
+}
+  \`\`\`
+
+### `GET /conversations/post/:id`
+
+Gets all messages for a conversation.
+
+#### Request
+- **URL**: `/conversations/post/:id`
+- **Method**: `GET`
+- **Headers**: 
+  - `Content-Type: application/json`
+- **Params**:
+  \`\`\`json
+  {
+    "id": "string",
+  }
+  \`\`\`
+
+#### Response
+- **Status**: `200 OK`
+- **Body**:
+  \`\`\`json
+{
+  "_id": {
+    "$oid": "string"
+  },
+  title: "string",
+  sprint: "string",
+  microExperience: "string",
+  module:"string",
+  milestone:"string",
+  message: Array("string"),
+}
+  \`\`\`
