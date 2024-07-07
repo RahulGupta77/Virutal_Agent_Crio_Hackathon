@@ -2,27 +2,50 @@ from langchain.document_loaders.csv_loader import CSVLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import HuggingFaceInstructEmbeddings
 from langchain.vectorstores import FAISS
-from langchain.document_loaders.csv_loader import CSVLoader
 
-# Load data for each column separately
-data_question = CSVLoader(file_path='Qkart_FAQs.csv', source_column="Question").load()
-data_sprint =  CSVLoader(file_path='Qkart_FAQs.csv', source_column="Sprint").load()
-data_micro_exp = CSVLoader(file_path='Qkart_FAQs.csv', source_column="Micro Experience").load()
-data_module = CSVLoader(file_path='Qkart_FAQs.csv', source_column="Module").load()
-data_milestone = CSVLoader(file_path='Qkart_FAQs.csv', source_column="Milestone").load()
+def load_csv_data(file_path, columns):
+    """
+    Load data from a CSV file for the specified columns.
+    """
+    data = []
+    for column in columns:
+        data += CSVLoader(file_path=file_path, source_column=column).load()
+    return data
 
-# Concatenate the loaded data
-data = data_question + data_sprint + data_micro_exp + data_module + data_milestone
+def split_text_into_chunks(data, chunk_size=500, chunk_overlap=20):
+    """
+    Split text into chunks using RecursiveCharacterTextSplitter.
+    """
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+    return text_splitter.split_documents(data)
 
-# Split the text into Chunks
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=20)
-text_chunks = text_splitter.split_documents(data)
+def generate_embeddings_and_create_db(text_chunks, model_name, db_path):
+    """
+    Generate embeddings from text chunks and create a FAISS vector database.
+    """
+    embeddings = HuggingFaceInstructEmbeddings(model_name=model_name)
+    docsearch = FAISS.from_documents(text_chunks, embeddings)
+    docsearch.save_local(db_path)
 
-# Download Sentence Transformers Embedding From Hugging Face
-embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-large")
+def process_csv_to_vector_db(file_path, columns, model_name, db_path, chunk_size=500, chunk_overlap=20):
+    """
+    Process a CSV file and create a FAISS vector database.
+    """
+    data = load_csv_data(file_path, columns)
+    text_chunks = split_text_into_chunks(data, chunk_size, chunk_overlap)
+    generate_embeddings_and_create_db(text_chunks, model_name, db_path)
 
-DB_FAISS_PATH = "vectorDatabase/db_faiss"
-# COnverting the text Chunks into embeddings and saving the embeddings into FAISS Knowledge Base
-docsearch = FAISS.from_documents(text_chunks, embeddings)
 
-docsearch.save_local(DB_FAISS_PATH)
+columns_faq = ["Question", "Sprint", "Micro Experience", "Module", "Milestone"]
+file_path_faq = '../csv_files/Qkart_FAQs.csv'
+db_path_faq = "./vectorDatabase/db_faiss_Qkart"
+
+columns_delivery = ["Question", "Response"]
+file_path_delivery = '../csv_files/Sales_FAQs.csv'
+db_path_delivery = "./vectorDatabase/db_faiss_Sales"
+
+# Processing Qkart FAQs CSV
+process_csv_to_vector_db(file_path_faq, columns_faq, "hkunlp/instructor-large", db_path_faq)
+
+# Processing Delivery FAQs CSV
+process_csv_to_vector_db(file_path_delivery, columns_delivery, "hkunlp/instructor-large", db_path_delivery)

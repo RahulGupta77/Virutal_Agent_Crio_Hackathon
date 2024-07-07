@@ -1,5 +1,4 @@
 from langchain.llms import GooglePalm
-from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.prompts import PromptTemplate
 from langchain.vectorstores import FAISS
@@ -43,8 +42,8 @@ def initialize_conversational_chain(llm, docsearch):
 def main():
     load_environment_variables()
     
-    # Path to the saved FAISS index
-    DB_FAISS_PATH = "vectorDatabase/db_faiss"
+    # Path to the saved FAISS index for Sales team
+    DB_FAISS_PATH = "../vectorDatabase/db_faiss_Sales"
     
     # Initialize the embeddings
     embeddings = initialize_embeddings()
