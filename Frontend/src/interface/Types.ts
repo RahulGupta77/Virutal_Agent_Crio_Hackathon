@@ -1,7 +1,7 @@
 export interface Message {
   id: string;
-  message: string;
-  senderId: string;
+  question: string
+  response: string | boolean,
 }
 
 export interface Conversation {

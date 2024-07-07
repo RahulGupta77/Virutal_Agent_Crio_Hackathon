@@ -1,5 +1,5 @@
 import React, { createContext, ReactElement, useState, Dispatch, SetStateAction } from "react";
-import { Converse } from "../interface/Types";
+import { Converse, Message } from "../interface/Types";
 
 // Define the context value type
 type AuthContextType = {
@@ -13,6 +13,8 @@ type AuthContextType = {
   }>>;
   conversation: Converse[];
   setConversation: Dispatch<SetStateAction<Converse[]>>;
+  messages: Message[]; // Added semicolon to end the type definition
+  setMessage: Dispatch<SetStateAction<Message[]>>; // Added semicolon to end the type definition
 };
 
 type Props = {
@@ -28,6 +30,8 @@ const initialContextValue: AuthContextType = {
   setAuth: () => {},
   conversation: [],
   setConversation: () => {},
+  messages: [], // Initialized as an empty array
+  setMessage: () => {} // Initialized with an empty function
 };
 
 const MyContext = createContext<AuthContextType>(initialContextValue);
@@ -39,8 +43,10 @@ function ContextProvider({ children }: Props) {
     username: "",
   });
 
+  const [messages, setMessage] = useState<Message[]>([]); // Initialized as an empty array
+
   return (
-    <MyContext.Provider value={{ auth, setAuth, conversation, setConversation }}>
+    <MyContext.Provider value={{ auth, setAuth, conversation, setConversation, messages, setMessage }}>
       {children}
     </MyContext.Provider>
   );

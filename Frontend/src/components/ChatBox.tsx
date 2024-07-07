@@ -1,45 +1,33 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Conversation from "./Conversation";
 import AllConversation from "./AllConversation";
-import { conversation, message } from "../assets/data";
 import { Message } from "../interface/Types";
 import backSVG from "./../assets/back.svg";
+import { MyContext } from "./ContextProvider";
+import useConversation from "../hooks/userConversation";
 
 type ConversationType = {
-  id: string | null;
-  title: string;
-  messages: Message[];
+  id: string;
 };
 
 type Props = {};
 
 function ChatBox({}: Props) {
+  const { conversation, messages, setMessage } = useContext(MyContext);
+  const { getAllMessages } = useConversation();
+
   const [currentConversation, setCurrentConversation] =
     useState<ConversationType>({
-      id: null,
-      title: "",
-      messages: [],
+      id: "",
     });
 
-  function currentConversationHandler(id: string) {
-    const cons = conversation.find((ele) => ele.id === id);
-
-    const msgs: Message[] = [];
-    if (cons?.messagesId) {
-      for (const messageId of cons.messagesId) {
-        const foundMessage: Message | undefined = message.find(
-          (ele) => ele.id === messageId
-        );
-        if (foundMessage) {
-          msgs.push(foundMessage);
-        }
-      }
+  async function currentConversationHandler(id: string) {
+    if (id) {
+      await getAllMessages(id);
     }
     setCurrentConversation({
-      id: cons?.id || null,
-      title: cons?.title || "",
-      messages: msgs,
+      id: id,
     });
   }
   return (
@@ -50,15 +38,12 @@ function ChatBox({}: Props) {
         ) : (
           <div
             className="hover:cursor-pointer"
-            onClick={() =>
-              setCurrentConversation({
-                id: null,
-                title: "",
-                messages: [],
-              })
-            }
+            onClick={() => {
+              setCurrentConversation({ id: "" });
+              setMessage([]);
+            }}
           >
-            <img src={backSVG}/>
+            <img src={backSVG} />
           </div>
         )}
         <h1 className="text-primary">8282 Chatbot</h1>
@@ -69,7 +54,7 @@ function ChatBox({}: Props) {
           currentConversationHandler={currentConversationHandler}
         />
       ) : (
-        <Conversation allMessages={currentConversation.messages} />
+        <Conversation conversationId={currentConversation.id} allMessages={messages} />
       )}
     </div>
   );

@@ -2,7 +2,7 @@ import { RiRobot2Line } from "react-icons/ri";
 
 type Props = {
   position: string;
-  text: string;
+  text: string | boolean;
 };
 
 function Chat({ position, text }: Props) {

@@ -2,9 +2,10 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { LoginRes, User } from "../interface/Types";
 import { MyContext } from "../components/ContextProvider";
-import { BASE_URL } from "../constants/constatns";
+// import { BASE_URL } from "../constants/constatns";
 
-const baseurl = BASE_URL;
+// const baseurl = BASE_URL;
+const baseurl = "http://localhost:8000";
 
 type UseUserAuthResult = {
   loading: boolean;
