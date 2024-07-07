@@ -6,6 +6,7 @@
 1. Omkar Sonawane
 2. Rahul Gupta
 3. Mohammad Alim
+4. Siddharth Jain
 
 ### Project Context:
 The objective of this project is to develop a chatbot that enhances the learning experience by:
