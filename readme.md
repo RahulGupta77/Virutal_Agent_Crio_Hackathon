@@ -1,4 +1,4 @@
-# Virtual Agent for Users to Improve their Learning Experience
+# Virtual Agent for Users to Help Them While Coding
 
 ## Team Name: 8282 Squad
 
@@ -6,7 +6,6 @@
 1. Omkar Sonawane
 2. Rahul Gupta
 3. Mohammad Alim
-4. Siddarth Jain
 
 ### Project Context:
 The objective of this project is to develop a chatbot that enhances the learning experience by:
@@ -16,25 +15,12 @@ The objective of this project is to develop a chatbot that enhances the learning
 
 ### Technologies Used:
 
-#### Frontend:
-- **TypeScript**
-- **React.js**
-- **Context API**
-- **Axios**
-- **Tailwind CSS**
+| **Category** | **Technologies** |
+|--------------|-------------------|
+| **Frontend** | TypeScript, React.js, Context API, Axios, Tailwind CSS |
+| **Backend**  | Express.js, MongoDB, CORS, Node.js |
+| **LLMs and Backend** | Flask, Langchain, Hugging Face Embeddings, FAISS Vector DB, GooglePalm (as LLM) |
 
-#### Backend:
-- **Express.js**
-- **MongoDB**
-- **CORS**
-- **Node.js**
-
-#### LLMs and Backend:
-- **Flask**
-- **Langchain**
-- **Hugging Face Embeddings**
-- **FAISS Vector DB**
-- **GooglePalm (as LLM)**
 
 ### Implementation:
 We implemented a Retrieval-Augmented Generation (RAG) based agent to handle FAQs for Qkart and the sales team. The model was deployed locally using Flask. 
