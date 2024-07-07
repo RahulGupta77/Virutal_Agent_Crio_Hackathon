@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
-import { IoArrowBack } from "react-icons/io5";
 import Conversation from "./Conversation";
 import AllConversation from "./AllConversation";
 import { conversation, message } from "../assets/data";
 import { Message } from "../interface/Types";
+import backSVG from "./../assets/back.svg";
 
 type ConversationType = {
   id: string | null;
@@ -44,8 +44,8 @@ function ChatBox({}: Props) {
   }
   console.log(currentConversation);
   return (
-    <div className="w-full h-full bg-stone-100 rounded-md flex flex-col justify-between max-w-[40rem]">
-      <div className="bg-green-400 h-[5%] rounded-t-md text-center font-bold text-2xl py-4 px-6 flex justify-between items-center">
+    <div className="w-full h-full bg-stone-100 rounded-xl flex flex-col justify-between max-w-[25rem]">
+      <div className="bg-bgPrimary h-[5%] rounded-t-xl text-center font-bold text-2xl py-4 px-6 flex justify-between items-center border-b-primary">
         {!currentConversation.id ? (
           <div></div>
         ) : (
@@ -59,10 +59,10 @@ function ChatBox({}: Props) {
               })
             }
           >
-            <IoArrowBack />
+            <img src={backSVG}/>
           </div>
         )}
-        <h1>8282 Agent</h1>
+        <h1 className="text-primary">8282 Chatbot</h1>
         <div></div>
       </div>
       {!currentConversation.id ? (

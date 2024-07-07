@@ -9,8 +9,7 @@ function App() {
 
   return (
     <ContextProvider>
-      <main className={`flex h-5/6 flex-col items-center m-8 `}>
-        <h1>Chat bot</h1>
+      <main className={`flex h-5/6 flex-col items-center m-8 font-roboto`}>
         {!auth.auth ? <ChatBox /> : <Auth />}
       </main>
     </ContextProvider>

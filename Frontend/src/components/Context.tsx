@@ -6,7 +6,7 @@ type Props = {
 
 const Context = ({title,messageId}: Props) => {
   return (
-    <div id={messageId} className='py-2 border text-lg hover:bg-green-400 hover:cursor-pointer'>
+    <div id={messageId} className='py-2 border-b bg-bgSecondary text-lg hover:bg-secondary hover:text-bgPrimary hover:cursor-pointer'>
         {title}
     </div>
   )

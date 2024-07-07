@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Message } from "../interface/Types";
 import Chat from "./Chat";
 import useFetch from "../hooks/useFetch";
+import sendSVG from './../assets/send.svg'
+import MessageLoading from "./MessageLoading";
 
 type Props = {
   allMessages: Message[];
@@ -58,7 +60,7 @@ export default function Conversation({ allMessages }: Props) {
   return (
     <>
       <div
-        className="h-[35rem] overflow-y-scroll flex flex-col items-baseline"
+        className="h-[30rem] overflow-y-scroll flex flex-col items-baseline bg-bgSecondary"
         ref={chatContainerRef}
       >
         {messages.map((ele) => (
@@ -68,23 +70,27 @@ export default function Conversation({ allMessages }: Props) {
             text={ele.message}
           />
         ))}
+        {loading && 
+        <MessageLoading/>
+        }
       </div>
-      <div className="p-4">
+      <div className="p-4 bg-bgSecondary rounded-es-xl">
+        <div className="bg-bgPrimary text-center py-2 rounded-3xl flex justify-center">
         <input
           ref={inputRef}
           placeholder="Enter your query"
           type="text"
           disabled={loading}
-          className="py-1 px-2 w-10/12 mx-2 outline-none"
+          className="py-1 px-2 w-9/12 outline-none rounded-full "
           onKeyDown={sendMessage}
-        />
+          />
         <button
           onClick={sendMessageHandler}
           disabled={loading}
-          className="bg-stone-300 px-3 py-2 rounded-lg"
-        >
-          Send
+          >
+        <img src={sendSVG}/>
         </button>
+          </div>
       </div>
     </>
   );
