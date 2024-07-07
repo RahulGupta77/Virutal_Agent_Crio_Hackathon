@@ -5,6 +5,21 @@ const conversation = mongoose.Schema({
   title: {
     type: String,
   },
+  sprint:{
+    type:String,
+    default:""
+  },
+  microExperience:{
+    type:String,
+    default:""
+  },
+  module:{
+    type:String,
+    default:""
+  },
+  milestone:{
+    type:String
+  },
   message: {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
   },
