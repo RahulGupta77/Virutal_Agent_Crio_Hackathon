@@ -60,7 +60,7 @@ export default function Conversation({ allMessages }: Props) {
   return (
     <>
       <div
-        className="h-[35rem] overflow-y-scroll flex flex-col items-baseline bg-bgSecondary"
+        className="h-[30rem] overflow-y-scroll flex flex-col items-baseline bg-bgSecondary"
         ref={chatContainerRef}
       >
         {messages.map((ele) => (
@@ -74,14 +74,14 @@ export default function Conversation({ allMessages }: Props) {
         <MessageLoading/>
         }
       </div>
-      <div className="p-4 bg-bgSecondary">
+      <div className="p-4 bg-bgSecondary rounded-es-xl">
         <div className="bg-bgPrimary text-center py-2 rounded-3xl flex justify-center">
         <input
           ref={inputRef}
           placeholder="Enter your query"
           type="text"
           disabled={loading}
-          className="py-1 px-2 w-9/12 outline-none rounded-full"
+          className="py-1 px-2 w-9/12 outline-none rounded-full "
           onKeyDown={sendMessage}
           />
         <button

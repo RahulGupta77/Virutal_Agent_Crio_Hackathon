@@ -44,7 +44,7 @@ function ChatBox({}: Props) {
   }
   console.log(currentConversation);
   return (
-    <div className="w-full h-full bg-stone-100 rounded-xl flex flex-col justify-between max-w-[30rem]">
+    <div className="w-full h-full bg-stone-100 rounded-xl flex flex-col justify-between max-w-[25rem]">
       <div className="bg-bgPrimary h-[5%] rounded-t-xl text-center font-bold text-2xl py-4 px-6 flex justify-between items-center border-b-primary">
         {!currentConversation.id ? (
           <div></div>

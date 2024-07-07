@@ -10,13 +10,13 @@ const AddConversation: React.FC<Props> = ({ handlerConversation }) => {
   }
 
   return (
-    <div className="flex flex-col justify-between items-center h-[35rem]">
-      <form className="flex flex-col justify-between items-start gap-6 h-full w-full">
-        <div className="flex flex-col justify-evenly items-start gap-6 py-4">
-          <div>
+    <div className="flex flex-col justify-between items-center h-[35rem] ">
+      <form className="flex flex-col justify-between items-start gap-6 h-full w-full ">
+        <div className="flex flex-col justify-evenly items-start gap-6 py-4 ">
+          <div className="px-4">
             <label className="px-4 text-bgPrimary">Sprint Name</label>
             <select
-              className="border rounded-md px-4 py-2 w-full"
+              className="border rounded-md px-4 py-2 w-full "
               value=""
               onChange={handleSprint}
             >
@@ -29,7 +29,7 @@ const AddConversation: React.FC<Props> = ({ handlerConversation }) => {
             </select>
           </div>
 
-          <div>
+          <div className="px-4">
             <label className="px-4 text-bgPrimary">Module Name</label>
             <select
               className="border rounded-md px-4 py-2 w-full"
@@ -51,7 +51,7 @@ const AddConversation: React.FC<Props> = ({ handlerConversation }) => {
             </select>
           </div>
 
-          <div>
+          <div className="px-4">
             <label className="px-4 text-bgPrimary">MileStone Name</label>
             <select
               className="border rounded-md px-4 py-2 w-full"
@@ -79,12 +79,12 @@ const AddConversation: React.FC<Props> = ({ handlerConversation }) => {
             </select>
           </div>
 
-          <div>
+          <div className="px-4">
             <label className="px-4 text-bgPrimary">Query</label>
             <input
               type="text"
-              className="border rounded-md px-4 py-2 w-full"
-              placeholder="Enter your Query"
+              className="border rounded-md px-4 py-2 w-full outline-none"
+              placeholder="Enter your Query "
             />
           </div>
         </div>
@@ -92,7 +92,7 @@ const AddConversation: React.FC<Props> = ({ handlerConversation }) => {
         <div className="flex items-center justify-between w-full">
           <div
             onClick={() => handlerConversation(false)}
-            className="hover:cursor-pointer bg-green-500 text-white w-full text-bgPrimary bg-secondary py-4  text-center"
+            className="hover:cursor-pointer bg-green-500 text-white w-full text-bgPrimary bg-secondary py-4  text-center rounded-es-xl"
           >
             Back
           </div>

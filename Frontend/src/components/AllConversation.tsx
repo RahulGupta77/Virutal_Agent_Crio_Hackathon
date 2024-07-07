@@ -16,7 +16,7 @@ function AllConversation({ currentConversationHandler }: Props) {
 
 
   return (
-    <div className="h-[35rem] bg-bgPrimary flex flex-col justify-between ">
+    <div className="h-[35rem] bg-bgPrimary flex flex-col justify-between rounded-es-xl">
       {!newConversation ? (
         <>
           <div className="overflow-y-scroll">
@@ -27,7 +27,7 @@ function AllConversation({ currentConversationHandler }: Props) {
               </div>
             ))}
           </div>
-          <div className="p-4 bg-primary text-bgPrimary hover:cursor-pointer ">
+          <div className="p-4 bg-primary text-bgPrimary hover:cursor-pointer rounded-es-xl">
             <button onClick={()=>handlerConversation(true)}>Add new Conversation</button>
           </div>
         </>
