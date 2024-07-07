@@ -1,7 +1,9 @@
 const { userModel } = require("../models/user.model");
 
 const registerController = async (req, res) => {
-  try {
+  try { 
+    console.log(req.body)
+    
     const createdUser = await userModel.create(req.body);
     res.status(200).send(createdUser);
   } catch (err) {
