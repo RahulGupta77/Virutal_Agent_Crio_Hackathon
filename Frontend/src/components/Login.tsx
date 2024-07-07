@@ -6,7 +6,7 @@ interface Props {
   setView: (view: boolean) => void;
 }
 
-export default function Login({ setView }: Props) {
+export default function Login({ }: Props) {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const {  error, loading, login } = useUserAuth();
