@@ -1,4 +1,4 @@
-import React, { createContext, ReactElement, useState, Dispatch, SetStateAction } from "react";
+import { createContext, ReactElement, useState, Dispatch, SetStateAction } from "react";
 import { Converse, Message } from "../interface/Types";
 
 // Define the context value type

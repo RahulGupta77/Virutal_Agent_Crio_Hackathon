@@ -2,7 +2,6 @@
 import { useContext, useState } from "react";
 import Conversation from "./Conversation";
 import AllConversation from "./AllConversation";
-import { Message } from "../interface/Types";
 import backSVG from "./../assets/back.svg";
 import { MyContext } from "./ContextProvider";
 import useConversation from "../hooks/userConversation";
@@ -14,7 +13,7 @@ type ConversationType = {
 type Props = {};
 
 function ChatBox({}: Props) {
-  const { conversation, messages, setMessage } = useContext(MyContext);
+  const { messages, setMessage } = useContext(MyContext);
   const { getAllMessages } = useConversation();
 
   const [currentConversation, setCurrentConversation] =
