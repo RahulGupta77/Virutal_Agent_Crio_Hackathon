@@ -21,12 +21,12 @@ def initialize_embeddings(model_name="hkunlp/instructor-large"):
 def load_faiss_index(db_faiss_path, embeddings):
     return FAISS.load_local(db_faiss_path, embeddings)
 
-def initialize_llm(api_key, temperature=0.2):
+def initialize_llm(api_key, temperature=0.5):
     return GooglePalm(google_api_key=api_key, temperature=temperature)
 
 def create_prompt_template():
     prompt_template = """Given the following context and a question, provide a response based on the context only.
-    If the answer is not found in the context, kindly state "I don't know." Don't try to make up an answer.
+    If the answer is not found in the context, kindly state "My human colleague will help you here, so kindly give me a moment 😊" Don't try to make up an answer.
 
     CONTEXT: {context}
 
@@ -68,39 +68,45 @@ chat_history_sales = []
 
 @app.route('/qkart-faqs', methods=['POST'])
 def qkart_faqs():
-    if request.content_type != 'application/json':
-        return jsonify({'error': 'Content-Type must be application/json'}), 415
+    try:
+        if request.content_type != 'application/json':
+            return jsonify({'error': 'Content-Type must be application/json'}), 415
 
-    data = request.get_json()
-    question = data.get('question')
-    if not question:
-        return jsonify({'error': 'No question provided'}), 400
+        data = request.get_json()
+        question = data.get('question')
+        if not question:
+            return jsonify({'error': 'No question provided'}), 400
 
-    result = qa_qkart({"question": question, "chat_history": chat_history_qkart})
-    answer = result['answer']
-    
-    # Updating qkart-faqs chat history
-    chat_history_qkart.append((question, answer))
-    
-    return jsonify({'answer': answer})
+        result = qa_qkart({"question": question, "chat_history": chat_history_qkart})
+        answer = result['answer']
+        
+        # Updating qkart-faqs chat history
+        chat_history_qkart.append((question, answer))
+        
+        return jsonify({'answer': answer})
+    except Exception as e:
+        return jsonify({'Please provide an appropriate  question!! 🙁'}), 500
 
 @app.route('/sales-faqs', methods=['POST'])
 def sales_faqs():
-    if request.content_type != 'application/json':
-        return jsonify({'error': 'Content-Type must be application/json'}), 415
+    try:
+        if request.content_type != 'application/json':
+            return jsonify({'error': 'Content-Type must be application/json'}), 415
 
-    data = request.get_json()
-    question = data.get('question')
-    if not question:
-        return jsonify({'error': 'No question provided'}), 400
+        data = request.get_json()
+        question = data.get('question')
+        if not question:
+            return jsonify({'error': 'No question provided'}), 400
 
-    result = qa_sales({"question": question, "chat_history": chat_history_sales})
-    answer = result['answer']
-    
-    # Updating sales chat history
-    chat_history_sales.append((question, answer))
-    
-    return jsonify({'answer': answer})
+        result = qa_sales({"question": question, "chat_history": chat_history_sales})
+        answer = result['answer']
+        
+        # Updating sales chat history
+        chat_history_sales.append((question, answer))
+        
+        return jsonify({'answer': answer})
+    except Exception as e:
+        return jsonify({'Please provide an appropriate  question!! 🙁'}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
