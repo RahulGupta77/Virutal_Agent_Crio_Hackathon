@@ -30,12 +30,12 @@ function Signup({ setView }: Props) {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold">SignUp</h1>
-      <form className="flex flex-col gap-8 p-4" onSubmit={handleSubmit}>
+      <h1 className="text-3xl font-bold text-secondary ">SignUp</h1>
+      <form className="flex flex-col gap-4 p-4 mt-2" onSubmit={handleSubmit}>
         <div>
           <label className="p-2">Username</label>
           <input
-            className="p-2 rounded-md"
+            className="p-2 outline-none border-b-2"
             ref={usernameRef}
             type="text"
             placeholder="Enter your username"
@@ -44,7 +44,7 @@ function Signup({ setView }: Props) {
         <div>
           <label className="p-2">Password</label>
           <input
-            className="p-2 rounded-md"
+            className="p-2  outline-none border-b-2"
             ref={passwordRef}
             type="password"
             placeholder="Enter your password"
@@ -52,7 +52,7 @@ function Signup({ setView }: Props) {
         </div>
         <button
           type="submit"
-          className="bg-green-400 p-2 rounded-md cursor-pointer"
+          className="bg-primary text-bgPrimary p-2 mt-5 rounded-md cursor-pointer"
         >
           SignUp
         </button>
