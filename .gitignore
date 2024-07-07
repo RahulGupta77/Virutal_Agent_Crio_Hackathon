@@ -3,7 +3,7 @@ aws-deployment/
 __pycache__/
 *.pyc
 *node_modules
-.env
+*.env
 *.csv
 .ipynb_checkpoints/
 .DS_Store

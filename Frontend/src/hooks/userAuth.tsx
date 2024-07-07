@@ -26,12 +26,13 @@ export default function useUserAuth(): UseUserAuthResult {
     setLoading(true);
     setError(null);
     try {
-      const response: LoginRes = (await axios.post(`${baseurl}/auth/login`, user))
-        .data;
+      const response: LoginRes = (
+        await axios.post(`${baseurl}/auth/login`, user)
+      ).data;
       if (response.verified) {
-        setAuth({ auth: true, username: response.username });
+      console.log(response)
+        setAuth({auth: true, username: user.username });
       }
-      
     } catch (err: any) {
       setError(err.message || "An error occurred");
     } finally {

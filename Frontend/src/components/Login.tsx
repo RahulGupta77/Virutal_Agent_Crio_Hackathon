@@ -16,7 +16,6 @@ export default function Login({ setView }: Props) {
     event.preventDefault();
     const username = usernameRef.current?.value;
     const password = passwordRef.current?.value;
-
     if (username && password) {
       let obj: User = {
         username,
@@ -55,7 +54,7 @@ export default function Login({ setView }: Props) {
             placeholder="Enter your password"
           />
         </div>
-        <button type="submit" className="bg-primary text-bgPrimary p-2 mt-5 rounded-md cursor-pointer" onClick={()=>setView(false)}>
+        <button type="submit" className="bg-primary text-bgPrimary p-2 mt-5 rounded-md cursor-pointer">
           {loading ? 'Loading...' : 'Login'}
         </button>
         {loginError && <div className="text-red-500">{loginError}</div>}
