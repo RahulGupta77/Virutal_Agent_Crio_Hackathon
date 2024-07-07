@@ -1,16 +1,13 @@
-import React, { useContext, useState } from "react";
+import  { useContext, useState } from "react";
 import axios from "axios";
 import {
-  AllConversationRes,
-  ConversationRes,
   Converse,
   Message,
   NewConversation,
 } from "../interface/Types";
 import { MyContext } from "../components/ContextProvider";
-// import { BASE_URL } from "../constants/constatns";
+import { BASE_URL } from "../constants/constatns";
 
-const BASE_URL = "http://localhost:8000";
 function useConversation() {
   const { auth, setConversation, setMessage } = useContext(MyContext);
   const [loading, setLoading] = useState(false);
@@ -19,7 +16,7 @@ function useConversation() {
     setLoading(true);
     try {
       let response: any = (
-        await axios.post("http://localhost:8000/conversation/new", data)
+        await axios.post(`${BASE_URL}/conversation/new`, data)
       ).data;
       console.log(response, "from user conversation");
       setConversation((prev) => [
@@ -39,7 +36,7 @@ function useConversation() {
     try {
       let response: any = (
         await axios.get(
-          `http://localhost:8000/conversation/allConversation/${auth.username}`
+          `${BASE_URL}/conversation/allConversation/${auth.username}`
         )
       ).data;
       setLoading(false);
@@ -60,7 +57,7 @@ function useConversation() {
     setLoading(true);
     try {
       let response: any = (
-        await axios.get(`http://localhost:8000/conversation/all/${id}`)
+        await axios.get(`${BASE_URL}/conversation/all/${id}`)
       ).data;
 
       let resMsg: Message[] = [];
@@ -86,7 +83,7 @@ function useConversation() {
     setLoading(true);
     try {
       let response: any = (
-        await axios.patch(`http://localhost:8000/conversation/update/${id}`,body)
+        await axios.patch(`${BASE_URL}/conversation/update/${id}`,body)
       ).data;
 
     } catch (err) {
