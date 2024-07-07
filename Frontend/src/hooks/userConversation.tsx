@@ -82,7 +82,7 @@ function useConversation() {
   async function addMessage(id:string,body:{question:string,response:string}){
     setLoading(true);
     try {
-      let response: any = (
+     (
         await axios.patch(`${BASE_URL}/conversation/update/${id}`,body)
       ).data;
 
