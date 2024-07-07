@@ -33,7 +33,7 @@ const MessageLoading: React.FC<Props> = () => {
         <RiRobot2Line />
       </div>
       <div className="bg-bgPrimary text m-2 px-5 py-3 text-start  rounded-t-3xl rounded-e-3xl w-full">
-        Typing{dots}
+        Thinking{dots}
       </div>
     </div>
   );
