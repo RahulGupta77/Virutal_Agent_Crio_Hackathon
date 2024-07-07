@@ -38,7 +38,7 @@ export default function Conversation({ allMessages, conversationId }: Props) {
         question: query,
         response: res,
       };
-      await addMessage(conversationId, { question: query, response: res });
+      addMessage(conversationId, { question: query, response: res });
       setMessages((prev) => {
         let msgs = [...prev];
         msgs.pop();

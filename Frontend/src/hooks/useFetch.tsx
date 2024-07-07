@@ -20,6 +20,9 @@ export default function useFetch() {
         body: JSON.stringify({ question: query }),
       });
       let res: Response = await data.json();
+      if(res.answer.toLocaleLowerCase().includes('response')){
+        res.answer = res.answer.split('response')[1]
+      }
       return res.answer;
     } catch (err) {
       console.log("not getting response from llm");

@@ -30,8 +30,8 @@ function ChatBox({}: Props) {
     });
   }
   return (
-    <div className="w-full h-full bg-stone-100 rounded-xl flex flex-col justify-between max-w-[25rem]">
-      <div className="bg-bgPrimary h-[5%] rounded-t-xl text-center font-bold text-2xl py-4 px-6 flex justify-between items-center border-b-primary">
+    <div className="w-full h-full bg-stone-100 rounded-xl flex flex-col justify-between max-w-[25rem] flex flex-end bg-primary">
+      <div className="bg-bgPrimary h-[5%] rounded-t-xl text-center font-bold text-2xl py-4 px-6 flex justify-between items-end border-b-primary">
         {!currentConversation.id ? (
           <div></div>
         ) : (
