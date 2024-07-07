@@ -5,8 +5,8 @@ const { messageModel } = require("../models/message.model");
 const getConversation = async (req, res) => {
   try {
     const user = await userModel
-      .findOne({ username: req.body.username })
-      .populate("conversations");
+      .findOne({ username: req.params.username })
+      .populate("conversations").select("conversations");
     return res.status(200).send(user);
   } catch (err) {
     res.status(500).send(err.message);
@@ -27,12 +27,17 @@ const getMessage = async (req, res) => {
 const newConversation = async (req, res) => {
   try {
     const message = await messageModel.create({
-      question: req.body.question,
+      question: req.body.query,
       response: req.body.response,
     });
 
     const converse = await conversationModel.create({
-      title: req.body.question.split(" ").slice(0, 5).join(" "),
+      title: req.body.query.split(" ").slice(0, 5).join(" "),
+      sprint:req.body.sprint,
+      microExperience:req.body.microExperience,
+      module:req.body.module,
+      milestone:req.body.milestone,
+      
     });
 
     converse.message.push(message._id);
@@ -41,7 +46,7 @@ const newConversation = async (req, res) => {
     savedUser.conversations.push(converse._id);
     await savedUser.save();
 
-    res.status(200).send(converse);
+    res.status(200).send({title:converse.title,id:converse._id});
   } catch (err) {
     res.status(500).send(err.message);
   }

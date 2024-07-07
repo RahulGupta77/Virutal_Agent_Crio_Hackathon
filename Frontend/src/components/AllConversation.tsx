@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Context from "./Context";
-import { conversation } from "../assets/data";
+import { sprintManager } from "../assets/data";
 import AddConversation from "./AddConversation";
+import useConversation from "../hooks/userConversation";
+import { MyContext } from "./ContextProvider";
 
 type Props = {
   currentConversationHandler: (id: string) => void;
@@ -9,11 +11,19 @@ type Props = {
 
 function AllConversation({ currentConversationHandler }: Props) {
   let [newConversation, setNewConversation] = useState(false);
+  let {conversation} =  useContext(MyContext)
+  let {getAllUserConversation} = useConversation()
 
   function handlerConversation(show:boolean){
        setNewConversation(show)
   }
 
+
+
+  useEffect(()=>{
+     getAllUserConversation()
+
+  },[])
 
   return (
     <div className="h-[35rem] bg-bgPrimary flex flex-col justify-between rounded-es-xl">
@@ -33,7 +43,7 @@ function AllConversation({ currentConversationHandler }: Props) {
         </>
       ) : (
         <div>
-          <AddConversation handlerConversation={handlerConversation} />
+          <AddConversation handlerConversation={handlerConversation} sprintManager={sprintManager} />
         </div>
       )}
     </div>

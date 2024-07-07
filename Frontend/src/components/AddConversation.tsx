@@ -1,31 +1,135 @@
-import React from "react";
+import React, { useContext, useRef, useState } from "react";
+import { NewConversation } from "../interface/Types";
+import { MyContext } from "./ContextProvider";
+import userConversation from "../hooks/userConversation";
 
 type Props = {
   handlerConversation: (show: boolean) => void;
+  sprintManager: Array<{
+    sprintName: string;
+    microExperience: string[];
+    module: string[];
+    milestone: string[];
+  }>;
 };
 
-const AddConversation: React.FC<Props> = ({ handlerConversation }) => {
-  function handleSprint() {
-    // Handle sprint selection logic here if needed
-  }
+const AddConversation: React.FC<Props> = ({
+  handlerConversation,
+  sprintManager,
+}) => {
+  const { auth } = useContext(MyContext);
+  const { addNewConversation,loading } = userConversation();
+  const [selectedSprint, setSelectedSprint] = useState("");
+  const [selectedMicroExperience, setSelectedMicroExperience] = useState("");
+  const [selectedModule, setSelectedModule] = useState("");
+  const [selectedMilestone, setSelectedMilestone] = useState("");
+  const queryRef = useRef<HTMLInputElement>(null);
+
+  const handleSprintChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedSprint(event.target.value);
+    setSelectedMicroExperience("");
+    setSelectedModule("");
+    setSelectedMilestone("");
+  };
+
+  const handleMicroExperienceChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSelectedMicroExperience(event.target.value);
+    setSelectedModule("");
+    setSelectedMilestone("");
+  };
+
+  const handleModuleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedModule(event.target.value);
+    setSelectedMilestone("");
+  };
+
+  const handleMilestoneChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSelectedMilestone(event.target.value);
+  };
+
+  const getMicroExperiencesForSelectedSprint = () => {
+    const sprint = sprintManager.find(
+      (sprint) => sprint.sprintName === selectedSprint
+    );
+    return sprint ? sprint.microExperience : [];
+  };
+
+  const getModulesForSelectedSprint = () => {
+    const sprint = sprintManager.find(
+      (sprint) => sprint.sprintName === selectedSprint
+    );
+    return sprint ? sprint.module : [];
+  };
+
+  const getMilestonesForSelectedModule = () => {
+    const sprint = sprintManager.find(
+      (sprint) => sprint.sprintName === selectedSprint
+    );
+    return sprint ? sprint.milestone : [];
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (queryRef.current?.value) {
+      let newConversation: NewConversation = {
+        microExperience: selectedMicroExperience,
+        milestone:selectedMilestone,
+        module: selectedModule,
+        query: queryRef.current.value,
+        response: "I got you",
+        sprint: selectedSprint,
+        username: auth.username,
+      };
+
+      addNewConversation(newConversation);
+    }
+  };
 
   return (
-    <div className="flex flex-col justify-between items-center h-[35rem] ">
-      <form className="flex flex-col justify-between items-start gap-6 h-full w-full ">
-        <div className="flex flex-col justify-evenly items-start gap-6 py-4 ">
+    <div className="flex flex-col justify-between items-center h-[35rem]">
+      <form
+        className="flex flex-col justify-between items-start gap-6 h-full w-full"
+        onSubmit={handleSubmit}
+      >
+        <div className="flex flex-col justify-evenly items-start gap-6 py-4">
           <div className="px-4">
             <label className="px-4 text-bgPrimary">Sprint Name</label>
             <select
-              className="border rounded-md px-4 py-2 w-full "
-              value=""
-              onChange={handleSprint}
+              className="border rounded-md px-4 py-2 w-full"
+              value={selectedSprint}
+              onChange={handleSprintChange}
             >
-              <option key="mern1" value="mern1">
-                mern1
+              <option value="" disabled hidden>
+                Select Sprint
               </option>
-              <option key="intv1" value="intv1">
-                Intv 1
+              {sprintManager.map((sprint) => (
+                <option key={sprint.sprintName} value={sprint.sprintName}>
+                  {sprint.sprintName}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="px-4">
+            <label className="px-4 text-bgPrimary">Micro Experience</label>
+            <select
+              className="border rounded-md px-4 py-2 w-full"
+              value={selectedMicroExperience}
+              onChange={handleMicroExperienceChange}
+              disabled={!selectedSprint}
+            >
+              <option value="" disabled hidden>
+                Select Micro Experience
               </option>
+              {getMicroExperiencesForSelectedSprint().map((microExperience) => (
+                <option key={microExperience} value={microExperience}>
+                  {microExperience}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -33,49 +137,37 @@ const AddConversation: React.FC<Props> = ({ handlerConversation }) => {
             <label className="px-4 text-bgPrimary">Module Name</label>
             <select
               className="border rounded-md px-4 py-2 w-full"
-              value=""
-              onChange={handleSprint}
+              value={selectedModule}
+              onChange={handleModuleChange}
+              disabled={!selectedMicroExperience}
             >
-              <option key="auth" value="auth">
-                Auth
+              <option value="" disabled hidden>
+                Select Module
               </option>
-              <option key="qkart" value="qkart">
-                qkart
-              </option>
-              <option key="react-hooks" value="react-hooks">
-                react hooks
-              </option>
-              <option key="qkart-front-hooks" value="qkart-front-hooks">
-                qkart front hooks
-              </option>
+              {getModulesForSelectedSprint().map((module) => (
+                <option key={module} value={module}>
+                  {module}
+                </option>
+              ))}
             </select>
           </div>
 
           <div className="px-4">
-            <label className="px-4 text-bgPrimary">MileStone Name</label>
+            <label className="px-4 text-bgPrimary">Milestone Name</label>
             <select
               className="border rounded-md px-4 py-2 w-full"
-              value="authentication"
-              onChange={handleSprint}
+              value={selectedMilestone}
+              onChange={handleMilestoneChange}
+              disabled={!selectedModule}
             >
-              <option key="getting-started" value="getting-started">
-                getting started
+              <option value="" disabled hidden>
+                Select Milestone
               </option>
-              <option key="authentication" value="authentication">
-                authentication
-              </option>
-              <option key="product-page" value="product-page">
-                product page
-              </option>
-              <option key="cart" value="cart">
-                qkart front hooks
-              </option>
-              <option key="checkout" value="checkout">
-                checkout
-              </option>
-              <option key="deployment" value="deployment">
-                deployment
-              </option>
+              {getMilestonesForSelectedModule().map((milestone) => (
+                <option key={milestone} value={milestone}>
+                  {milestone}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -84,7 +176,8 @@ const AddConversation: React.FC<Props> = ({ handlerConversation }) => {
             <input
               type="text"
               className="border rounded-md px-4 py-2 w-full outline-none"
-              placeholder="Enter your Query "
+              placeholder="Enter your Query"
+              ref={queryRef}
             />
           </div>
         </div>
@@ -92,12 +185,12 @@ const AddConversation: React.FC<Props> = ({ handlerConversation }) => {
         <div className="flex items-center justify-between w-full">
           <div
             onClick={() => handlerConversation(false)}
-            className="hover:cursor-pointer bg-green-500 text-white w-full text-bgPrimary bg-secondary py-4  text-center rounded-es-xl"
+            className="hover:cursor-pointer bg-green-500 text-white w-full text-bgPrimary bg-secondary py-4 text-center rounded-es-xl"
           >
             Back
           </div>
-          <div className="hover:cursor-pointer bg-green-300 text-white w-full py-4  text-bgPrimary text-center bg-primary">
-            <button className="w-full">Create</button>
+          <div className="hover:cursor-pointer bg-green-300 text-white w-full py-4 text-bgPrimary text-center bg-primary">
+            <button className="w-full">{!loading?"Create":"Creating..."}</button>
           </div>
         </div>
       </form>
