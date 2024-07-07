@@ -1,4 +1,5 @@
-import React, { createContext, ReactElement, useState } from "react";
+import React, { createContext, ReactElement, useState, Dispatch, SetStateAction } from "react";
+import { Converse } from "../interface/Types";
 
 // Define the context value type
 type AuthContextType = {
@@ -6,12 +7,12 @@ type AuthContextType = {
     auth: boolean;
     username: string;
   };
-  setAuth: React.Dispatch<
-    React.SetStateAction<{
-      auth: boolean;
-      username: string;
-    }>
-  >;
+  setAuth: Dispatch<SetStateAction<{
+    auth: boolean;
+    username: string;
+  }>>;
+  conversation: Converse[];
+  setConversation: Dispatch<SetStateAction<Converse[]>>;
 };
 
 type Props = {
@@ -25,18 +26,21 @@ const initialContextValue: AuthContextType = {
     username: "",
   },
   setAuth: () => {},
+  conversation: [],
+  setConversation: () => {},
 };
 
 const MyContext = createContext<AuthContextType>(initialContextValue);
 
 function ContextProvider({ children }: Props) {
-  const [auth, setAuth] = useState({
+  const [conversation, setConversation] = useState<Converse[]>([]);
+  const [auth, setAuth] = useState<{ auth: boolean; username: string }>({
     auth: false,
     username: "",
   });
 
   return (
-    <MyContext.Provider value={{ auth, setAuth }}>
+    <MyContext.Provider value={{ auth, setAuth, conversation, setConversation }}>
       {children}
     </MyContext.Provider>
   );
