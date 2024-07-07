@@ -8,8 +8,13 @@ function App() {
   let { auth } = useContext(MyContext);
    
   return (
-      <main className={`flex h-5/6 flex-col items-center m-8 font-roboto`}>
-        {auth.auth? <ChatBox /> : <Auth />}
+      <main className='flex h-5/6 flex-col items-center m-8 font-roboto'>
+        {auth.auth?
+                 <div className="flex justify-end w-full">
+                 <ChatBox />
+               </div>
+       
+          : <Auth />}
       </main>
   );
 }

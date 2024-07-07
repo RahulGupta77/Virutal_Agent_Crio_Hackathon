@@ -12,6 +12,7 @@ export default function useFetch() {
   async function getResponse(query: string) {
     setLoading(true);
     try {
+      debugger;
       let data = await fetch(BASE_URL, {
         headers: {
           "Content-Type": "application/json",
