@@ -6,7 +6,7 @@ interface Props {
   setView: (view: boolean) => void;
 }
 
-export default function Login({ setView }: Props) {
+export default function Login({ }: Props) {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const {  error, loading, login } = useUserAuth();
@@ -16,7 +16,6 @@ export default function Login({ setView }: Props) {
     event.preventDefault();
     const username = usernameRef.current?.value;
     const password = passwordRef.current?.value;
-
     if (username && password) {
       let obj: User = {
         username,
@@ -35,12 +34,12 @@ export default function Login({ setView }: Props) {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold">Login</h1>
-      <form className="flex flex-col gap-8 p-4" onSubmit={handleSubmit}>
+      <h1 className="text-3xl font-bold text-secondary ">Login</h1>
+      <form className="flex flex-col gap-4 p-4 mt-2" onSubmit={handleSubmit}>
         <div>
           <label className="p-2">Username</label>
           <input
-            className="p-2 rounded-md"
+            className="p-2 outline-none border-b-2"
             ref={usernameRef}
             type="text"
             placeholder="Enter your username"
@@ -49,13 +48,13 @@ export default function Login({ setView }: Props) {
         <div>
           <label className="p-2">Password</label>
           <input
-            className="p-2 rounded-md"
+            className="p-2 outline-none border-b-2"
             ref={passwordRef}
             type="password"
             placeholder="Enter your password"
           />
         </div>
-        <button type="submit" className="bg-green-400 p-2 rounded-md cursor-pointer" onClick={()=>setView(false)}>
+        <button type="submit" className="bg-primary text-bgPrimary p-2 mt-5 rounded-md cursor-pointer">
           {loading ? 'Loading...' : 'Login'}
         </button>
         {loginError && <div className="text-red-500">{loginError}</div>}
@@ -63,4 +62,4 @@ export default function Login({ setView }: Props) {
       </form>
     </div>
   );
-}
+} 

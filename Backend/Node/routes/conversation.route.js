@@ -7,8 +7,8 @@ const {
   getMessage,
 } = require("../controllers/conversation.controller");
 
-router.get("/all", getConversation);
-router.get("/post/:id", getMessage);
+router.get("/allConversation/:username", getConversation);
+router.get("/all/:id", getMessage);
 router.post("/new", newConversation);
 // To work!
 router.patch("/update/:id", updateConversation);

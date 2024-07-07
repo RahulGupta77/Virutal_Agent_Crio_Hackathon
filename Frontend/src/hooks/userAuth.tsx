@@ -2,8 +2,9 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { LoginRes, User } from "../interface/Types";
 import { MyContext } from "../components/ContextProvider";
+import { BASE_URL } from "../constants/constatns";
 
-const baseurl = import.meta.env.VITE_BASE_URL;
+const baseurl = BASE_URL;
 
 type UseUserAuthResult = {
   loading: boolean;
@@ -26,12 +27,13 @@ export default function useUserAuth(): UseUserAuthResult {
     setLoading(true);
     setError(null);
     try {
-      const response: LoginRes = (await axios.post(`${baseurl}/login`, user))
-        .data;
+      const response: LoginRes = (
+        await axios.post(`${baseurl}/auth/login`, user)
+      ).data;
       if (response.verified) {
-        setAuth({ auth: true, username: response.username });
+      console.log(response)
+        setAuth({auth: true, username: user.username });
       }
-      
     } catch (err: any) {
       setError(err.message || "An error occurred");
     } finally {
@@ -43,7 +45,7 @@ export default function useUserAuth(): UseUserAuthResult {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post(`${baseurl}/signup`, user);
+      const response = await axios.post(`${baseurl}/auth/register`, user);
       setData(response.data);
     } catch (err: any) {
       setError(err.message || "An error occurred");

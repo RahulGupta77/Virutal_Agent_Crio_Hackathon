@@ -3,28 +3,41 @@ const { conversationModel } = require("../models/conversation.model");
 const { messageModel } = require("../models/message.model");
 
 const getConversation = async (req, res) => {
-  const user = await userModel
-    .findOne({ username: req.body.username })
-    .populate("conversations");
-  return res.status(200).send(user);
+  try {
+    const user = await userModel
+      .findOne({ username: req.params.username })
+      .populate("conversations").select("conversations");
+    return res.status(200).send(user);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 };
 
 const getMessage = async (req, res) => {
-  const conversation = await conversationModel
-    .findOne({ _id: req.params.id })
-    .populate("message");
-  return res.status(200).send(conversation);
+  try {
+    const conversation = await conversationModel
+      .findOne({ _id: req.params.id })
+      .populate("message");
+    return res.status(200).send(conversation);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 };
 
 const newConversation = async (req, res) => {
   try {
     const message = await messageModel.create({
-      question: req.body.question,
+      question: req.body.query,
       response: req.body.response,
     });
 
     const converse = await conversationModel.create({
-      title: req.body.question.split(" ").slice(0, 5).join(" "),
+      title: req.body.query.split(" ").slice(0, 5).join(" "),
+      sprint:req.body.sprint,
+      microExperience:req.body.microExperience,
+      module:req.body.module,
+      milestone:req.body.milestone,
+      
     });
 
     converse.message.push(message._id);
@@ -33,43 +46,10 @@ const newConversation = async (req, res) => {
     savedUser.conversations.push(converse._id);
     await savedUser.save();
 
-    res.status(200).send(converse);
+    res.status(200).send({title:converse.title,id:converse._id});
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err.message);
   }
-  //   await converse.message.push({
-  //     question: req.body.question,
-  //     response: req.body.response,
-  //   });
-  // await conversationModel.findOneAndUpdate(
-  //   { _id: converse._id },
-  //   {
-  //     $push: {
-  //       message: {
-  //         question: req.body.question,
-  //         response: req.body.response,
-  //       },
-  //     },
-  //   },
-  //   { new: true }
-  // );
-
-  //   const updatedUser = await userModel.findOne({ username: req.body.username });
-  //   updatedUser.conversations.push(converse._id);
-  // const updatedUser = await userModel.findOneAndUpdate(
-  //   { username: req.body.username },
-  //   { $push: { conversations: converse._id } },
-  //   { new: true }
-  // );
-
-  // if (!updatedUser) {
-  //   await conversationModel.findByIdAndDelete(converse._id);
-  // } else {
-  //   console.log("Updated user:", updatedUser);
-  // }
-  // res
-  //   .status(201)
-  //   .send({ conversationId: converse._id, userModel: updatedUser });
 };
 
 const updateConversation = async (req, res) => {
@@ -87,26 +67,6 @@ const updateConversation = async (req, res) => {
   } catch (err) {
     res.status(500).send(err.message);
   }
-
-  //   await converse.message.push({
-  //     question: req.body.question,
-  //     response: req.body.response,
-  //   });
-  // const newConverse = await conversationModel.findOneAndUpdate(
-  //   { _id: converse._id },
-  //   {
-  //     $push: {
-  //       message: {
-  //         question: req.body.question,
-  //         response: req.body.response,
-  //       },
-  //     },
-  //   },
-  //   { new: true }
-  // );
-  // console.log(newConverse);
-
-  //res.status(200).send(newConverse);
 };
 
 module.exports = {
