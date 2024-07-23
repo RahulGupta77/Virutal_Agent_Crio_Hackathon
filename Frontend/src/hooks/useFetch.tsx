@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const BASE_URL = "http://192.168.0.59:5000/qkart-faqs";
+const BASE_URL = "http://192.168.250.185:5000/qkart-faqs";
 
 interface Response {
   answer: string;
@@ -12,7 +12,6 @@ export default function useFetch() {
   async function getResponse(query: string) {
     setLoading(true);
     try {
-      debugger;
       let data = await fetch(BASE_URL, {
         headers: {
           "Content-Type": "application/json",
